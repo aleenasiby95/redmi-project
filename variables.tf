@@ -34,3 +34,18 @@ variable "instance_type" {
   description = "Instance type"
   default     = "t2.micro"
 }
+
+variable "hosted_zone_name" {
+
+  type        = string
+  description = "hosted_zone_name"
+  default     = "arunsiby.tech"
+}
+
+variable "host_name" {
+
+  type        = string
+  description = "host_name"
+  default     = "terraform"
+}
+

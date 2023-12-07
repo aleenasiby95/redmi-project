@@ -118,3 +118,17 @@ resource "aws_instance" "frontend" {
   }
 }
 
+# create DNS record
+
+
+resource "aws_route53_record" "frontend" {
+
+  zone_id = data.aws_route53_zone.zone-details.id
+  name    = "${var.host_name}.${var.hosted_zone_name}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.frontend.public_ip]
+}
+
+
+
