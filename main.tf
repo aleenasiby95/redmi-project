@@ -118,7 +118,21 @@ resource "aws_instance" "frontend" {
   }
 }
 
-# create DNS record
+
+
+# EC2 frontend elastic-ip
+
+
+resource "aws_eip" "frontend" {
+  instance = aws_instance.frontend.id
+  domain   = "vpc"
+  tags = {
+    "Name" = "${var.project_name}-${var.project_env}-frontend"
+  }
+}
+
+
+# create record frontend
 
 
 resource "aws_route53_record" "frontend" {
@@ -127,8 +141,6 @@ resource "aws_route53_record" "frontend" {
   name    = "${var.host_name}.${var.hosted_zone_name}"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.frontend.public_ip]
+  records = [aws_eip.frontend.public_ip]
 }
-
-
 
